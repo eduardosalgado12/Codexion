@@ -6,7 +6,7 @@
 /*   By: edsalgad <edsalgad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/09 12:15:45 by edsalgad          #+#    #+#             */
-/*   Updated: 2026/11/09 15:23:46 by edsalgad         ###   ########.fr       */
+/*   Updated: 2026/11/10 17:21:53 by edsalgad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ static int	init_coders(t_sim *sim)
 		sim->coders[i].id = i + 1;
 		sim->coders[i].left = &sim->dongles[i];
 		sim->coders[i].right = &sim->dongles[(i + 1) % sim->params.n_coders];
-		sim->coders[i].last_compile_start = 0;
 		sim->coders[i].compile_count = 0;
 		if (pthread_mutex_init(&sim->coders[i].state_mutex, NULL) != 0)
 			return (0);
@@ -60,6 +59,8 @@ static int	init_coders(t_sim *sim)
 
 int	init_sim(t_sim *sim)
 {
+	int	i;
+	
 	sim->stop = 0;
 	if (pthread_mutex_init(&sim->stop_mutex, NULL) != 0)
 		return (0);
@@ -69,5 +70,12 @@ int	init_sim(t_sim *sim)
 		return (0);
 	if (init_coders(sim) == 0)
 		return (0);
+	sim->start_time = get_time_ms();
+	i = 0;
+	while (i < sim->params.n_coders)
+	{
+		sim->coders[i].last_compile_start = sim->start_time;
+		i++;
+	}
 	return (1);
 }

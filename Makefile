@@ -6,7 +6,7 @@
 #    By: edsalgad <edsalgad@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/11/03 11:11:17 by edsalgad          #+#    #+#              #
-#    Updated: 2026/11/09 15:23:24 by edsalgad         ###   ########.fr        #
+#    Updated: 2026/11/10 17:09:53 by edsalgad         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,8 @@ NAME	= codexion
 CC		= cc
 CFLAGS	= -Wall -Wextra -Werror -pthread -I include
 
-SRCS	= src/main.c src/init.c src/utils.c
+SRCS	= src/main.c src/init.c src/utils.c src/time.c src/coder.c \
+			src/monitor.c
 OBJS	= $(SRCS:.c=.o)
 
 all: $(NAME)

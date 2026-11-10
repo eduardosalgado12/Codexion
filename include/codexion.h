@@ -6,7 +6,7 @@
 /*   By: edsalgad <edsalgad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/03 11:40:40 by edsalgad          #+#    #+#             */
-/*   Updated: 2026/11/09 15:24:12 by edsalgad         ###   ########.fr       */
+/*   Updated: 2026/11/10 17:07:45 by edsalgad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,5 +85,9 @@ typedef struct s_sim
 int		parse_args(int argc, char **argv, t_params *params);
 void	cleanup(t_sim *sim);
 int		init_sim(t_sim *sim);
+long	get_time_ms(void);
+void	*coder_routine(void *arg);
+void	print_status(t_coder *coder, char *msg);
+void	*monitor_routine(void *arg);
 
 #endif

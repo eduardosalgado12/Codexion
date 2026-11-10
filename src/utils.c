@@ -6,7 +6,7 @@
 /*   By: edsalgad <edsalgad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/03 14:58:36 by edsalgad          #+#    #+#             */
-/*   Updated: 2026/11/09 15:23:59 by edsalgad         ###   ########.fr       */
+/*   Updated: 2026/11/10 14:40:30 by edsalgad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	parse_args(int argc, char **argv, t_params *params)
 
 void	cleanup(t_sim *sim)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < sim->params.n_coders)
