@@ -6,27 +6,27 @@
 /*   By: edsalgad <edsalgad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/03 13:29:03 by edsalgad          #+#    #+#             */
-/*   Updated: 2026/11/10 17:15:04 by edsalgad         ###   ########.fr       */
+/*   Updated: 2026/11/12 16:11:36 by edsalgad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
-static void start_threads(t_sim *sim)
+static void	start_threads(t_sim *sim)
 {
 	int	i;
 
 	i = 0;
 	while (i < sim->params.n_coders)
 	{
-		pthread_create(&sim->coders[i].thread, NULL,
-			coder_routine, &sim->coders[i]);
+		pthread_create(&sim->coders[i].thread, NULL, coder_routine,
+			&sim->coders[i]);
 		i++;
 	}
 	pthread_create(&sim->monitor, NULL, monitor_routine, sim);
 }
 
-static void join_threads(t_sim *sim)
+static void	join_threads(t_sim *sim)
 {
 	int	i;
 

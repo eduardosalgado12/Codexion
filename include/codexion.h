@@ -6,7 +6,7 @@
 /*   By: edsalgad <edsalgad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/03 11:40:40 by edsalgad          #+#    #+#             */
-/*   Updated: 2026/11/10 17:07:45 by edsalgad         ###   ########.fr       */
+/*   Updated: 2026/11/12 12:33:27 by edsalgad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <stdlib.h>	// malloc, free, atoi
 # include <string.h>	// strcmp, strlen, memset
 # include <unistd.h>	// usleep, write
-# include <sys/time.h>	// gettimeofday (falta-te este)
+# include <sys/time.h>	// gettimeofday
 
 # define FIFO 0
 # define EDF 1

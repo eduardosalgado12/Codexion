@@ -6,7 +6,7 @@
 /*   By: edsalgad <edsalgad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/09 12:15:45 by edsalgad          #+#    #+#             */
-/*   Updated: 2026/11/10 17:21:53 by edsalgad         ###   ########.fr       */
+/*   Updated: 2026/11/12 16:47:36 by edsalgad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static int	init_coders(t_sim *sim)
 int	init_sim(t_sim *sim)
 {
 	int	i;
-	
+
 	sim->stop = 0;
 	if (pthread_mutex_init(&sim->stop_mutex, NULL) != 0)
 		return (0);
