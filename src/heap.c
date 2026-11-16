@@ -6,7 +6,7 @@
 /*   By: edsalgad <edsalgad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/16 15:22:10 by edsalgad          #+#    #+#             */
-/*   Updated: 2026/11/16 16:44:35 by edsalgad         ###   ########.fr       */
+/*   Updated: 2026/11/16 18:08:11 by edsalgad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,13 @@ int	heap_push(t_heap *heap, t_request req)
 	heap->size++;
 	while (i > 0)
 	{
-        parent = (i - 1) / 2;
-        if(is_before(heap->items[parent],heap->items[i]))
-            return(1);
-        tmp = heap->items[parent];
-        heap->items[parent] = heap->items[i];
-        heap->items[i] = tmp;
-        i = parent;
+		parent = (i - 1) / 2;
+		if (is_before(heap->items[parent], heap->items[i]))
+			return (1);
+		tmp = heap->items[parent];
+		heap->items[parent] = heap->items[i];
+		heap->items[i] = tmp;
+		i = parent;
 	}
 	return (1);
 }
@@ -58,14 +58,14 @@ int	heap_pop(t_heap *heap, t_request *out)
 	while (2 * i + 1 < heap->size)
 	{
 		child = (2 * i + 1);
-		if (child + 1 < heap->size
-			&& is_before(heap->items[child + 1], heap->items[child]))
+		if (child + 1 < heap->size && is_before(heap->items[child + 1],
+				heap->items[child]))
 			child = child + 1;
-		if(is_before(heap->items[i],heap->items[child]))
-			return(1);
+		if (is_before(heap->items[i], heap->items[child]))
+			return (1);
 		tmp = heap->items[child];
-        heap->items[child] = heap->items[i];
-        heap->items[i] = tmp;
+		heap->items[child] = heap->items[i];
+		heap->items[i] = tmp;
 		i = child;
 	}
 	return (1);

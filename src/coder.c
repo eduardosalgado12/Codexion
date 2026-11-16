@@ -6,7 +6,7 @@
 /*   By: edsalgad <edsalgad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/10 15:05:38 by edsalgad          #+#    #+#             */
-/*   Updated: 2026/11/16 18:07:25 by edsalgad         ###   ########.fr       */
+/*   Updated: 2026/11/16 18:09:40 by edsalgad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ static void	take_one(t_coder *coder, t_dongle *dongle)
 
 	pthread_mutex_lock(&dongle->mutex);
 	req.coder_id = coder->id;
-	if(coder->sim->params.scheduler == FIFO)
+	if (coder->sim->params.scheduler == FIFO)
 		req.priority = dongle->next_ticket++;
 	else
 		req.priority = coder->last_compile_start + coder->sim->params.t_burnout;
-	heap_push (&dongle->queue,req);
+	heap_push (&dongle->queue, req);
 	while (dongle->in_use || dongle->queue.items[0].coder_id != coder->id
 		|| get_time_ms() < dongle->released_at + coder->sim->params.cooldown)
 		wait_for_dongle(dongle);
