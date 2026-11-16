@@ -6,55 +6,56 @@
 /*   By: edsalgad <edsalgad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/10 15:05:38 by edsalgad          #+#    #+#             */
-/*   Updated: 2026/11/12 16:53:24 by edsalgad         ###   ########.fr       */
+/*   Updated: 2026/11/16 14:17:02 by edsalgad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
-int	is_stopped(t_sim *sim)
+static void	take_one(t_coder *coder, t_dongle *dongle)
 {
-	int	stopped;
+	long	wait;
 
-	pthread_mutex_lock(&sim->stop_mutex);
-	stopped = sim->stop;
-	pthread_mutex_unlock(&sim->stop_mutex);
-	return (stopped);
-}
-
-void	print_status(t_coder *coder, char *msg)
-{
-	pthread_mutex_lock(&coder->sim->print_mutex);
-	if (!is_stopped(coder->sim))
-		printf("%ld %d %s\n",
-			get_time_ms() - coder->sim->start_time,
-			coder->id,
-			msg);
-	pthread_mutex_unlock(&coder->sim->print_mutex);
+	pthread_mutex_lock(&dongle->mutex);
+	wait = dongle->released_at + coder->sim->params.cooldown;
+	wait = wait - get_time_ms();
+	if (wait > 0)
+		usleep(wait * 1000);
+	print_status(coder, "has taken a dongle");
 }
 
 static void	take_dongles(t_coder *coder)
 {
 	if (coder->id % 2 == 0)
 	{
-		pthread_mutex_lock(&coder->right->mutex);
-		print_status(coder, "has taken a dongle");
-		pthread_mutex_lock(&coder->left->mutex);
-		print_status(coder, "has taken a dongle");
+		take_one(coder, coder->right);
+		take_one(coder, coder->left);
 	}
 	else
 	{
-		pthread_mutex_lock(&coder->left->mutex);
-		print_status(coder, "has taken a dongle");
-		pthread_mutex_lock(&coder->right->mutex);
-		print_status(coder, "has taken a dongle");
+		take_one(coder, coder->left);
+		take_one(coder, coder->right);
 	}
 }
 
 static void	release_dongles(t_coder *coder)
 {
+	long	now;
+
+	now = get_time_ms();
+	coder->left->released_at = now;
+	coder->right->released_at = now;
 	pthread_mutex_unlock(&coder->left->mutex);
 	pthread_mutex_unlock(&coder->right->mutex);
+}
+
+static void	*single_coder(t_coder *coder)
+{
+	pthread_mutex_lock(&coder->left->mutex);
+	print_status(coder, "has taken a dongle");
+	usleep(coder->sim->params.t_burnout * 1000);
+	pthread_mutex_unlock(&coder->left->mutex);
+	return (NULL);
 }
 
 void	*coder_routine(void *arg)
@@ -63,13 +64,7 @@ void	*coder_routine(void *arg)
 
 	coder = (t_coder *)arg;
 	if (coder->left == coder->right)
-	{
-		pthread_mutex_lock(&coder->left->mutex);
-		print_status(coder, "has taken a dongle");
-		usleep(coder->sim->params.t_burnout * 1000);
-		pthread_mutex_unlock(&coder->left->mutex);
-		return (NULL);
-	}
+		return (single_coder(coder));
 	while (!is_stopped(coder->sim))
 	{
 		take_dongles(coder);

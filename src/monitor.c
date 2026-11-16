@@ -6,7 +6,7 @@
 /*   By: edsalgad <edsalgad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/10 17:04:16 by edsalgad          #+#    #+#             */
-/*   Updated: 2026/11/12 16:47:37 by edsalgad         ###   ########.fr       */
+/*   Updated: 2026/11/16 13:18:33 by edsalgad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ static int	check_burnouts(t_sim *sim)
 			sim->stop = 1;
 			pthread_mutex_unlock(&sim->stop_mutex);
 			printf("%ld %d burned out\n",
-					get_time_ms() - sim->start_time,
-					sim->coders[i].id);
+				get_time_ms() - sim->start_time,
+				sim->coders[i].id);
 			pthread_mutex_unlock(&sim->print_mutex);
 			return (1);
 		}
