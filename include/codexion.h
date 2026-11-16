@@ -6,7 +6,7 @@
 /*   By: edsalgad <edsalgad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/03 11:40:40 by edsalgad          #+#    #+#             */
-/*   Updated: 2026/11/16 13:44:10 by edsalgad         ###   ########.fr       */
+/*   Updated: 2026/11/16 17:56:09 by edsalgad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,5 +90,7 @@ void	*coder_routine(void *arg);
 void	print_status(t_coder *coder, char *msg);
 void	*monitor_routine(void *arg);
 int		is_stopped(t_sim *sim);
-
+int		heap_push(t_heap *heap, t_request req);
+int		heap_pop(t_heap *heap, t_request *out);
+void	wait_for_dongle(t_dongle *dongle);
 #endif
