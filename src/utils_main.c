@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   utils_main.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: edsalgad <edsalgad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/03 14:58:36 by edsalgad          #+#    #+#             */
-/*   Updated: 2026/11/10 14:40:30 by edsalgad         ###   ########.fr       */
+/*   Updated: 2026/11/17 12:51:56 by edsalgad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	cleanup(t_sim *sim)
 	i = 0;
 	while (i < sim->params.n_coders)
 	{
-		pthread_mutex_destroy(&sim->dongles[i].mutex);
+		pthread_mutex_destroy(&sim->dongles[i].dongle_mutex);
 		pthread_cond_destroy(&sim->dongles[i].cond);
 		pthread_mutex_destroy(&sim->coders[i].state_mutex);
 		i++;

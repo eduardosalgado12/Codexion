@@ -6,7 +6,7 @@
 /*   By: edsalgad <edsalgad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/09 12:15:45 by edsalgad          #+#    #+#             */
-/*   Updated: 2026/11/12 16:47:36 by edsalgad         ###   ########.fr       */
+/*   Updated: 2026/11/17 12:53:24 by edsalgad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	init_dongles(t_sim *sim)
 	i = 0;
 	while (i < sim->params.n_coders)
 	{
-		if (pthread_mutex_init(&sim->dongles[i].mutex, NULL) != 0)
+		if (pthread_mutex_init(&sim->dongles[i].dongle_mutex, NULL) != 0)
 			return (0);
 		if (pthread_cond_init(&sim->dongles[i].cond, NULL) != 0)
 			return (0);

@@ -6,7 +6,7 @@
 /*   By: edsalgad <edsalgad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/10 14:10:04 by edsalgad          #+#    #+#             */
-/*   Updated: 2026/11/16 18:08:58 by edsalgad         ###   ########.fr       */
+/*   Updated: 2026/11/17 12:42:12 by edsalgad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,13 @@ int	is_stopped(t_sim *sim)
 	return (stopped);
 }
 
-void	wait_for_dongle(t_dongle *dongle)
+void	set_alarm(struct timespec *ts)
 {
-	struct timespec	ts;
-
-	clock_gettime(CLOCK_REALTIME, &ts);
-	ts.tv_nsec += 1000000;
-	if (ts.tv_nsec >= 1000000000)
+	clock_gettime(CLOCK_REALTIME, ts);
+	ts->tv_nsec += 1000000;
+	if (ts->tv_nsec >= 1000000000)
 	{
-		ts.tv_sec++;
-		ts.tv_nsec -= 1000000000;
+		ts->tv_sec++;
+		ts->tv_nsec -= 1000000000;
 	}
-	pthread_cond_timedwait(&dongle->cond, &dongle->mutex, &ts);
 }

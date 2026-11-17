@@ -6,7 +6,7 @@
 /*   By: edsalgad <edsalgad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/03 11:40:40 by edsalgad          #+#    #+#             */
-/*   Updated: 2026/11/16 17:56:09 by edsalgad         ###   ########.fr       */
+/*   Updated: 2026/11/17 12:50:55 by edsalgad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ typedef struct s_heap
 
 typedef struct s_dongle
 {
-	pthread_mutex_t		mutex; // protege todos os campos abaixo
+	pthread_mutex_t		dongle_mutex; // protege todos os campos abaixo
 	int					in_use; // 1 se alguém o tem na mão
 	long				released_at; // quando foi largado (para o cooldown)
 	pthread_cond_t		cond; // para acordar quem está à espera
@@ -92,5 +92,6 @@ void	*monitor_routine(void *arg);
 int		is_stopped(t_sim *sim);
 int		heap_push(t_heap *heap, t_request req);
 int		heap_pop(t_heap *heap, t_request *out);
-void	wait_for_dongle(t_dongle *dongle);
+void	set_alarm(struct timespec *ts);
+
 #endif
