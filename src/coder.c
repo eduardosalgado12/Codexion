@@ -6,67 +6,11 @@
 /*   By: edsalgad <edsalgad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/10 15:05:38 by edsalgad          #+#    #+#             */
-/*   Updated: 2026/11/17 13:43:17 by edsalgad         ###   ########.fr       */
+/*   Updated: 2026/11/17 15:55:24 by edsalgad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
-
-static void	take_one(t_coder *coder, t_dongle *dongle)
-{
-	t_request		req;
-	struct timespec	ts;
-
-	pthread_mutex_lock(&dongle->dongle_mutex);
-	req.coder_id = coder->id;
-	if (coder->sim->params.scheduler == FIFO)
-		req.priority = dongle->next_ticket++;
-	else
-		req.priority = coder->last_compile_start
-			+ coder->sim->params.t_burnout;
-	heap_push(&dongle->queue, req);
-	while (dongle->in_use || dongle->queue.items[0].coder_id != coder->id
-		|| get_time_ms() < dongle->released_at + coder->sim->params.cooldown)
-	{
-		set_alarm(&ts);
-		pthread_cond_timedwait(&dongle->cond, &dongle->dongle_mutex, &ts);
-	}
-	heap_pop(&dongle->queue, &req);
-	dongle->in_use = 1;
-	pthread_mutex_unlock(&dongle->dongle_mutex);
-	print_status(coder, "has taken a dongle");
-}
-
-static void	take_dongles(t_coder *coder)
-{
-	if (coder->id % 2 == 0)
-	{
-		take_one(coder, coder->right);
-		take_one(coder, coder->left);
-	}
-	else
-	{
-		take_one(coder, coder->left);
-		take_one(coder, coder->right);
-	}
-}
-
-static void	release_dongles(t_coder *coder)
-{
-	long	now;
-
-	now = get_time_ms();
-	pthread_mutex_lock(&coder->left->dongle_mutex);
-	coder->left->in_use = 0;
-	coder->left->released_at = now;
-	pthread_cond_broadcast(&coder->left->cond);
-	pthread_mutex_unlock(&coder->left->dongle_mutex);
-	pthread_mutex_lock(&coder->right->dongle_mutex);
-	coder->right->in_use = 0;
-	coder->right->released_at = now;
-	pthread_cond_broadcast(&coder->right->cond);
-	pthread_mutex_unlock(&coder->right->dongle_mutex);
-}
 
 static void	*single_coder(t_coder *coder)
 {
@@ -90,7 +34,7 @@ void	*coder_routine(void *arg)
 		pthread_mutex_lock(&coder->state_mutex);
 		coder->last_compile_start = get_time_ms();
 		pthread_mutex_unlock(&coder->state_mutex);
-		print_status(coder, "is compiling");
+		print_start_compile(coder);
 		usleep(coder->sim->params.t_compile * 1000);
 		pthread_mutex_lock(&coder->state_mutex);
 		coder->compile_count++;

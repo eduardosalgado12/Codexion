@@ -6,7 +6,7 @@
 #    By: edsalgad <edsalgad@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/11/03 11:11:17 by edsalgad          #+#    #+#              #
-#    Updated: 2026/11/16 15:21:57 by edsalgad         ###   ########.fr        #
+#    Updated: 2026/11/17 15:47:55 by edsalgad         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CC		= cc
 CFLAGS	= -Wall -Wextra -Werror -pthread -I include
 
 SRCS	= src/main.c src/init.c src/utils_main.c src/utils.c src/coder.c \
-			src/monitor.c src/heap.c
+			src/monitor.c src/heap.c src/dongle.c
 OBJS	= $(SRCS:.c=.o)
 
 all: $(NAME)

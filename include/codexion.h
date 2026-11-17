@@ -6,7 +6,7 @@
 /*   By: edsalgad <edsalgad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/03 11:40:40 by edsalgad          #+#    #+#             */
-/*   Updated: 2026/11/17 12:50:55 by edsalgad         ###   ########.fr       */
+/*   Updated: 2026/11/17 15:55:10 by edsalgad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ void	*monitor_routine(void *arg);
 int		is_stopped(t_sim *sim);
 int		heap_push(t_heap *heap, t_request req);
 int		heap_pop(t_heap *heap, t_request *out);
-void	set_alarm(struct timespec *ts);
+void	take_dongles(t_coder *coder);
+void	print_start_compile(t_coder *coder);
+void	release_dongles(t_coder *coder);
 
 #endif

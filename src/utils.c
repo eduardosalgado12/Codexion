@@ -6,7 +6,7 @@
 /*   By: edsalgad <edsalgad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/10 14:10:04 by edsalgad          #+#    #+#             */
-/*   Updated: 2026/11/17 12:42:12 by edsalgad         ###   ########.fr       */
+/*   Updated: 2026/11/17 15:47:55 by edsalgad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,17 @@ int	is_stopped(t_sim *sim)
 	return (stopped);
 }
 
-void	set_alarm(struct timespec *ts)
+void	print_start_compile(t_coder *coder)
 {
-	clock_gettime(CLOCK_REALTIME, ts);
-	ts->tv_nsec += 1000000;
-	if (ts->tv_nsec >= 1000000000)
+	long	t;
+
+	pthread_mutex_lock(&coder->sim->print_mutex);
+	if (!is_stopped(coder->sim))
 	{
-		ts->tv_sec++;
-		ts->tv_nsec -= 1000000000;
+		t = get_time_ms() - coder->sim->start_time;
+		printf("%ld %d has taken a dongle\n", t, coder->id);
+		printf("%ld %d has taken a dongle\n", t, coder->id);
+		printf("%ld %d is compiling\n", t, coder->id);
 	}
+	pthread_mutex_unlock(&coder->sim->print_mutex);
 }
