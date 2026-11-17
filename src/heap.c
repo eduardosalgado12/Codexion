@@ -6,7 +6,7 @@
 /*   By: edsalgad <edsalgad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/16 15:22:10 by edsalgad          #+#    #+#             */
-/*   Updated: 2026/11/17 12:47:41 by edsalgad         ###   ########.fr       */
+/*   Updated: 2026/11/17 17:06:57 by edsalgad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ static int	is_before(t_request a, t_request b)
 {
 	if (a.priority != b.priority)
 		return (a.priority < b.priority);
+	if (a.ticket != b.ticket)
+		return (a.ticket < b.ticket);
 	return (a.coder_id < b.coder_id);
 }
 

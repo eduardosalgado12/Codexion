@@ -6,19 +6,20 @@
 /*   By: edsalgad <edsalgad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/17 15:38:19 by edsalgad          #+#    #+#             */
-/*   Updated: 2026/11/17 15:48:42 by edsalgad         ###   ########.fr       */
+/*   Updated: 2026/11/17 17:06:43 by edsalgad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
-static void	enqueue(t_coder *coder, t_dongle *dongle)
+static void	request(t_coder *coder, t_dongle *dongle)
 {
 	t_request	req;
 
 	req.coder_id = coder->id;
+	req.ticket = dongle->next_ticket++;
 	if (coder->sim->params.scheduler == FIFO)
-		req.priority = dongle->next_ticket++;
+		req.priority = req.ticket;
 	else
 		req.priority = coder->last_compile_start
 			+ coder->sim->params.t_burnout;
@@ -55,8 +56,8 @@ void	take_dongles(t_coder *coder)
 	t_request	req;
 
 	lock_pair(coder);
-	enqueue(coder, coder->left);
-	enqueue(coder, coder->right);
+	request(coder, coder->left);
+	request(coder, coder->right);
 	while (!(dongle_ready(coder, coder->left)
 			&& dongle_ready(coder, coder->right)))
 	{

@@ -6,7 +6,7 @@
 /*   By: edsalgad <edsalgad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/03 11:40:40 by edsalgad          #+#    #+#             */
-/*   Updated: 2026/11/17 15:55:10 by edsalgad         ###   ########.fr       */
+/*   Updated: 2026/11/17 17:05:37 by edsalgad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct s_request
 {
 	int			coder_id;
 	long		priority; // fifo: nº de chegada | edf: deadline
+	long		ticket;   
 }				t_request;
 
 typedef struct s_heap

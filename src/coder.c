@@ -6,7 +6,7 @@
 /*   By: edsalgad <edsalgad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/10 15:05:38 by edsalgad          #+#    #+#             */
-/*   Updated: 2026/11/17 15:55:24 by edsalgad         ###   ########.fr       */
+/*   Updated: 2026/11/17 17:01:52 by edsalgad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void	*coder_routine(void *arg)
 	coder = (t_coder *)arg;
 	if (coder->left == coder->right)
 		return (single_coder(coder));
+	if (coder->id % 2 == 0)
+	usleep(1000);
 	while (!is_stopped(coder->sim))
 	{
 		take_dongles(coder);
