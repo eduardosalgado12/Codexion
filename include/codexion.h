@@ -6,19 +6,19 @@
 /*   By: edsalgad <edsalgad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/03 11:40:40 by edsalgad          #+#    #+#             */
-/*   Updated: 2026/11/17 17:05:37 by edsalgad         ###   ########.fr       */
+/*   Updated: 2026/11/19 18:48:44 by edsalgad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CODEXION_H
 # define CODEXION_H
 
-# include <pthread.h>	// threads, mutexes, condition variables
-# include <stdio.h>		// printf, fprintf
-# include <stdlib.h>	// malloc, free, atoi
-# include <string.h>	// strcmp, strlen, memset
-# include <unistd.h>	// usleep, write
-# include <sys/time.h>	// gettimeofday
+# include <pthread.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <string.h>
+# include <unistd.h>
+# include <sys/time.h>
 
 # define FIFO 0
 # define EDF 1
@@ -39,7 +39,7 @@ typedef struct s_params
 typedef struct s_request
 {
 	int			coder_id;
-	long		priority; // fifo: nº de chegada | edf: deadline
+	long		priority;
 	long		ticket;   
 }				t_request;
 
@@ -51,35 +51,34 @@ typedef struct s_heap
 
 typedef struct s_dongle
 {
-	pthread_mutex_t		dongle_mutex; // protege todos os campos abaixo
-	int					in_use; // 1 se alguém o tem na mão
-	long				released_at; // quando foi largado (para o cooldown)
-	pthread_cond_t		cond; // para acordar quem está à espera
-	t_heap				queue; // pedidos à espera
-	long				next_ticket; // contador para fifo (0, 1, 2, 3…)
+	pthread_mutex_t		dongle_mutex;
+	int					in_use;
+	long				released_at;
+	t_heap				queue;
+	long				next_ticket;
 }				t_dongle;
 
 typedef struct s_coder
 {
-	int				id; // 1 a n_coders
+	int				id;
 	pthread_t		thread;
 	t_dongle		*left;
 	t_dongle		*right;
-	long			last_compile_start; // lido pelo monitor!
-	int				compile_count; // lido pelo monitor!
-	pthread_mutex_t	state_mutex; // protege os dois campos acima
-	struct s_sim	*sim; // ponteiro para o estado global
+	long			last_compile_start;
+	int				compile_count;
+	pthread_mutex_t	state_mutex;
+	struct s_sim	*sim;
 }				t_coder;
 
 typedef struct s_sim
 {
 	t_params		params;
-	t_coder			*coders; // array de n_coders
-	t_dongle		*dongles; // array de n_coders
-	long			start_time; // em ms
-	int				stop; // 1 quando a simulação acaba
-	pthread_mutex_t	stop_mutex; // protege stop
-	pthread_mutex_t	print_mutex; // protege os printf
+	t_coder			*coders;
+	t_dongle		*dongles;
+	long			start_time;
+	int				stop;
+	pthread_mutex_t	stop_mutex;
+	pthread_mutex_t	print_mutex;
 	pthread_t		monitor;
 }				t_sim;
 

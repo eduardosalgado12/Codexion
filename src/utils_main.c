@@ -6,7 +6,7 @@
 /*   By: edsalgad <edsalgad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/03 14:58:36 by edsalgad          #+#    #+#             */
-/*   Updated: 2026/11/17 12:51:56 by edsalgad         ###   ########.fr       */
+/*   Updated: 2026/11/19 18:49:09 by edsalgad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ void	cleanup(t_sim *sim)
 	while (i < sim->params.n_coders)
 	{
 		pthread_mutex_destroy(&sim->dongles[i].dongle_mutex);
-		pthread_cond_destroy(&sim->dongles[i].cond);
 		pthread_mutex_destroy(&sim->coders[i].state_mutex);
 		i++;
 	}
