@@ -293,6 +293,4 @@ I used an AI assistant (Claude) as a tutor during the project:
 - **Code review and debugging:** reviews of my functions (norm, logic errors such as `&&`
   instead of `||`, wrong arguments), and help reading `-fsanitize=address`,
   `-fsanitize=thread`, `valgrind` and `helgrind` reports.
-- **Testing:** small `awk` scripts to check the logs (no dongle duplication, cooldown,
-  phase durations) and repeated runs of the evaluation cases.
-- **Documentation:** a first draft of this README, which I reviewed.
+- **Documentation:** a first draft of this README, which I reviewed.    

@@ -6,7 +6,7 @@
 /*   By: edsalgad <edsalgad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/17 15:38:19 by edsalgad          #+#    #+#             */
-/*   Updated: 2026/11/19 18:59:17 by edsalgad         ###   ########.fr       */
+/*   Updated: 2026/11/19 19:01:53 by edsalgad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@ static void	request(t_coder *coder, t_dongle *dongle)
 	if (coder->sim->params.scheduler == FIFO)
 		req.priority = req.ticket;
 	else
-		req.priority = coder->last_compile_start
-			+ coder->sim->params.t_burnout;
+		req.priority = coder->last_compile_start + coder->sim->params.t_burnout;
 	heap_push(&dongle->queue, req);
 }
 
@@ -58,11 +57,11 @@ void	take_dongles(t_coder *coder)
 	lock_pair(coder);
 	request(coder, coder->left);
 	request(coder, coder->right);
-	while (!(dongle_ready(coder, coder->left)
-			&& dongle_ready(coder, coder->right)))
+	while (!(dongle_ready(coder, coder->left) && dongle_ready(coder,
+				coder->right)))
 	{
 		pthread_mutex_unlock(&coder->left->dongle_mutex);
-	    pthread_mutex_unlock(&coder->right->dongle_mutex);
+		pthread_mutex_unlock(&coder->right->dongle_mutex);
 		usleep(500);
 		lock_pair(coder);
 	}
